@@ -264,7 +264,7 @@ namespace ParkingProject
                 foreach (var parking in allParkings)
                 {
                     Console.WriteLine(parking.ToString());
-                    Console.WriteLine(new string('-', 60)); // Визуален разделител
+                    Console.WriteLine(new string('-', 60)); 
                 }
             }
             Console.ReadKey();
