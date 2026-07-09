@@ -22,6 +22,10 @@ namespace Project
             AvailableSpaces = availableSpaces;
             Vehicles = vehicles ?? new List<string>();
         }
-
+        public string ToFileRow()
+        {
+            string vehiclesPart = string.Join(",", Vehicles);
+            return $"{ParkingID};{Location};{TotalSpaces};{AvailableSpaces};{vehiclesPart}";
+        }
     }
 }
