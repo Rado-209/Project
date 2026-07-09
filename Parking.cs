@@ -27,5 +27,11 @@ namespace Project
             string vehiclesPart = string.Join(",", Vehicles);
             return $"{ParkingID};{Location};{TotalSpaces};{AvailableSpaces};{vehiclesPart}";
         }
+        public override string ToString()
+        {
+            string vehiclesInfo = Vehicles.Count > 0 ? string.Join(", ", Vehicles) : "няма паркирани коли";
+            return $" ID: {ParkingID} | Локация: {Location} | Общо паркоместа: {TotalSpaces} | " +
+                   $"Свободни паркоместа: {AvailableSpaces} | Паркирани коли: {vehiclesInfo}";
+        }
     }
 }
