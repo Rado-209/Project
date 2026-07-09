@@ -97,3 +97,66 @@ namespace ParkingProject
             List<string> linesToSave = allParkings.Select(p => p.ToFileRow()).ToList();
             File.WriteAllLines(filePath, linesToSave);
         }
+
+        static void AddNewParking()
+        {
+            Console.WriteLine("--- Добавяне на нов паркинг ---");
+
+            Console.Write("Въведете уникално ID на паркинга: ");
+            string id = Console.ReadLine();
+
+            
+            if (allParkings.Any(p => p.ParkingID.Equals(id, StringComparison.OrdinalIgnoreCase)))
+            {
+                Console.WriteLine("Грешка: Вече съществува паркинг с това ID!");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.Write("Местоположение: ");
+            string location = Console.ReadLine();
+
+            Console.Write("Общ брой паркоместа: ");
+            if (!int.TryParse(Console.ReadLine(), out int totalSpaces) || totalSpaces < 0)
+            {
+                Console.WriteLine("Грешка: Невалиден формат за общ брой паркоместа!");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.Write("Налични паркоместа: ");
+            if (!int.TryParse(Console.ReadLine(), out int availableSpaces) || availableSpaces < 0 || availableSpaces > totalSpaces)
+            {
+                Console.WriteLine("Грешка: Невалиден брой налични паркоместа (не може да е повече от общия брой)!");
+                Console.ReadKey();
+                return;
+            }
+
+            
+            Parking newParking = new Parking(id, location, totalSpaces, availableSpaces, new List<string>());
+            allParkings.Add(newParking);
+
+            
+            SaveDataToFile();
+
+            Console.WriteLine("\nПаркингът е добавен успешно и файлът е актуализиран!");
+            Console.ReadKey();
+        }
+
+        
+        static Parking SelectParking()
+        {
+            Console.Write("Въведете ID на паркинга: ");
+            string id = Console.ReadLine();
+
+            Parking parking = allParkings.FirstOrDefault(p => p.ParkingID.Equals(id, StringComparison.OrdinalIgnoreCase));
+
+            if (parking == null)
+            {
+                Console.WriteLine("Паркинг с такова ID не е намерен.");
+            }
+
+            return parking;
+        }
+    }
+}
