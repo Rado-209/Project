@@ -105,7 +105,7 @@ namespace ParkingProject
             Console.Write("Въведете уникално ID на паркинга: ");
             string id = Console.ReadLine();
 
-            
+
             if (allParkings.Any(p => p.ParkingID.Equals(id, StringComparison.OrdinalIgnoreCase)))
             {
                 Console.WriteLine("Грешка: Вече съществува паркинг с това ID!");
@@ -132,18 +132,18 @@ namespace ParkingProject
                 return;
             }
 
-            
+
             Parking newParking = new Parking(id, location, totalSpaces, availableSpaces, new List<string>());
             allParkings.Add(newParking);
 
-            
+
             SaveDataToFile();
 
             Console.WriteLine("\nПаркингът е добавен успешно и файлът е актуализиран!");
             Console.ReadKey();
         }
 
-        
+
         static Parking SelectParking()
         {
             Console.Write("Въведете ID на паркинга: ");
@@ -227,6 +227,25 @@ namespace ParkingProject
             SaveDataToFile();
 
             Console.WriteLine("\nПревозното средство напусна паркинга успешно и файлът е актуализиран!");
+            Console.ReadKey();
+        }
+
+        static void ShowAllParkings()
+        {
+            Console.WriteLine("--- Списък на всички паркинги ---");
+
+            if (allParkings.Count == 0)
+            {
+                Console.WriteLine("В момента няма регистрирани паркинги.");
+            }
+            else
+            {
+                foreach (var parking in allParkings)
+                {
+                    Console.WriteLine(parking.ToString());
+                    Console.WriteLine(new string('-', 60)); // Визуален разделител
+                }
+            }
             Console.ReadKey();
         }
     }
