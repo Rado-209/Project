@@ -229,6 +229,27 @@ namespace ParkingProject
             Console.WriteLine("\nПревозното средство напусна паркинга успешно и файлът е актуализиран!");
             Console.ReadKey();
         }
+        static void CheckAvailability()
+        {
+            Console.WriteLine("--- Проверка на наличността на паркоместа ---");
+            Console.Write("Въведете ID или местоположение на паркинга: ");
+            string input = Console.ReadLine();
+
+            Parking parking = allParkings.FirstOrDefault(p =>
+                p.ParkingID.Equals(input, StringComparison.OrdinalIgnoreCase) ||
+                p.Location.Equals(input, StringComparison.OrdinalIgnoreCase));
+
+            if (parking != null)
+            {
+                Console.WriteLine($"\nПаркинг: {parking.Location} (ID: {parking.ParkingID})");
+                Console.WriteLine($"Свободни паркоместа: {parking.AvailableSpaces} от общо {parking.TotalSpaces}");
+            }
+            else
+            {
+                Console.WriteLine("Паркинг с такова ID или местоположение не е намерен.");
+            }
+            Console.ReadKey();
+        }
 
         static void ShowAllParkings()
         {
