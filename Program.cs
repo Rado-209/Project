@@ -158,5 +158,42 @@ namespace ParkingProject
 
             return parking;
         }
+
+        static void RegisterVehicle()
+        {
+            Console.WriteLine("--- Регистрация на превозно средство в паркинг ---");
+
+            Parking parking = SelectParking();
+            if (parking == null)
+            {
+                Console.ReadKey();
+                return;
+            }
+
+            Console.Write("Въведете регистрационния номер на превозното средство: ");
+            string plate = Console.ReadLine();
+
+            if (parking.Vehicles.Any(v => v.Equals(plate, StringComparison.OrdinalIgnoreCase)))
+            {
+                Console.WriteLine("Грешка: Това превозно средство вече е паркирано в този паркинг!");
+                Console.ReadKey();
+                return;
+            }
+
+            if (parking.AvailableSpaces <= 0)
+            {
+                Console.WriteLine("Няма свободни паркоместа в този паркинг!");
+                Console.ReadKey();
+                return;
+            }
+
+            parking.Vehicles.Add(plate);
+            parking.AvailableSpaces--;
+
+            SaveDataToFile();
+
+            Console.WriteLine("\nПревозното средство е регистрирано успешно и файлът е актуализиран!");
+            Console.ReadKey();
+        }
     }
 }
